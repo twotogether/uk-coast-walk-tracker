@@ -1,11 +1,12 @@
 # UK Coastal Walk Tracker
 
-A Python project to track and visualise coastal walks around the UK.  
-This tool allows you to log GPX walks, generate an interactive map of the coastline you’ve walked, calculate distances, and see your progress as a fraction of the total UK coastline.
+A Python project to track and visualise coastal walks around the UK.
+
+This tool allows you to log GPX walks, generate a map of the coastline you’ve walked, calculate distances, and see your progress as a fraction of the total UK coastline.
 
 ## Features
 
-- Automatically detects new GPX files and updates `walks.yml`.  
+- Automatically detects new GPX files and updates `walks.yaml`.  
 - Generates interactive **Folium maps** showing walked sections.  
 - Calculates total distance walked and fraction of UK coastline completed.  
 - Supports journaling for each walk in Markdown (`journals/`).  
@@ -25,7 +26,11 @@ This tool allows you to log GPX walks, generate an interactive map of the coastl
 
     `python scripts/generate_map.py`
 
-     New GPX files will automatically be added to `walks.yml`.
+     New GPX files will automatically be added to `walks.yaml`.
+
+> NOTE: If you delete a `gpx` file, you must manually remove the entry from `walks.yaml`.
+
+## Output
 
 The map will be saved in the map/ folder.
 

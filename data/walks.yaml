@@ -5,9 +5,6 @@ walks:
 - name: S Queensferry To Boness
   gpx: gpx/s-queensferry-to-boness.gpx
   journal: journals\s-queensferry-to-boness.md
-- name: Craster To Alnmouth
-  gpx: gpx/craster-to-alnmouth.gpx
-  journal: journals\craster-to-alnmouth.md
 - name: Seafield To Aberlady
   gpx: gpx/seafield-to-aberlady.gpx
   journal: journals\seafield-to-aberlady.md
@@ -20,3 +17,9 @@ walks:
 - name: Arbroath To Auchmithie
   gpx: gpx/arbroath-to-auchmithie.gpx
   journal: journals\arbroath-to-auchmithie.md
+- name: Tyninghame To Dunbar
+  gpx: gpx/tyninghame-to-dunbar.gpx
+  journal: journals\tyninghame-to-dunbar.md
+- name: Dunstanburgh To Alnmouth
+  gpx: gpx/dunstanburgh-to-alnmouth.gpx
+  journal: journals\dunstanburgh-to-alnmouth.md
