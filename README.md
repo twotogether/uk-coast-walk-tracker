@@ -13,7 +13,7 @@ This tool allows you to log GPX walks, generate an interactive map of the coastl
 
 ## How to use this
 
-### Add your GPX files
+### Add your GPX Files and Generate the Map
 
 1. Place your GPX files in the `gpx` folder following the naming convention:
 
@@ -25,10 +25,8 @@ This tool allows you to log GPX walks, generate an interactive map of the coastl
 
     `python scripts/generate_map.py`
 
-     New GPX files will automatically be added to walks.yml.
-
+     New GPX files will automatically be added to `walks.yml`.
 
 The map will be saved in the map/ folder.
 
 [View Map](map/index.html)
-
