@@ -1,0 +1,13 @@
+walks:
+- name: S.Queensferry To Granton
+  gpx: gpx/s.queensferry-to-granton.gpx
+  journal: journals\s.queensferry-to-granton.md
+- name: S Queensferry To Boness
+  gpx: gpx/s-queensferry-to-boness.gpx
+  journal: journals\s-queensferry-to-boness.md
+- name: Craster To Alnmouth
+  gpx: gpx/craster-to-alnmouth.gpx
+  journal: journals\craster-to-alnmouth.md
+- name: Seafield To Aberlady
+  gpx: gpx/seafield-to-aberlady.gpx
+  journal: journals\seafield-to-aberlady.md
