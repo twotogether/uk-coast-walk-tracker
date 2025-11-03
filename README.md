@@ -29,3 +29,6 @@ This tool allows you to log GPX walks, generate an interactive map of the coastl
 
 
 The map will be saved in the map/ folder.
+
+[View Map](map/index.html)
+
