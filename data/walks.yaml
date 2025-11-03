@@ -11,3 +11,12 @@ walks:
 - name: Seafield To Aberlady
   gpx: gpx/seafield-to-aberlady.gpx
   journal: journals\seafield-to-aberlady.md
+- name: Aberdour To Kirkcaldy
+  gpx: gpx/aberdour-to-kirkcaldy.gpx
+  journal: journals\aberdour-to-kirkcaldy.md
+- name: Buckie To Findlater Castle
+  gpx: gpx/buckie-to-findlater-castle.gpx
+  journal: journals\buckie-to-findlater-castle.md
+- name: Arbroath To Auchmithie
+  gpx: gpx/arbroath-to-auchmithie.gpx
+  journal: journals\arbroath-to-auchmithie.md
