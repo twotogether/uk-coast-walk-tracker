@@ -1,4 +1,4 @@
-# S.Queensferry To Granton
+# South Queensferry To Granton
 
 | Section Walked   | Distance | Date |
 | -------- | ------- | ---- |
@@ -7,4 +7,4 @@
 
 ## Notes
 
-- Some sections walked as part of the John Muir way.
+- Some sections walked as part of the John Muir Way.
