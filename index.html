@@ -45,7 +45,7 @@
 
 <h1>UK Coast Walk Tracker</h1>
 
-<p>🌊 Explore your progress along the UK coastline.</p>
+<p>Explore your progress along the UK coastline.</p>
 
 <p><a href="map/index.html" target="_blank">🗺️ View Interactive Map</a></p>
 
@@ -64,53 +64,66 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
 async function loadMarkdown(url) {
-  const response = await fetch(url);
-  if (!response.ok) return `<p>⚠️ Unable to load ${url}</p>`;
-  const text = await response.text();
-  return marked.parse(text);
+  try {
+    const response = await fetch(url);
+    if (!response.ok) return `<p>⚠️ Unable to load ${url}</p>`;
+    const text = await response.text();
+    return marked.parse(text);
+  } catch (err) {
+    return `<p>⚠️ Error loading ${url}</p>`;
+  }
 }
 
 async function loadREADME() {
   const readmeContainer = document.getElementById("readme");
-  const html = await loadMarkdown("README.md");
-  readmeContainer.innerHTML = html;
+  readmeContainer.innerHTML = await loadMarkdown("README.md");
 }
 
 async function loadJournals() {
-  const response = await fetch("journals/");
-  if (!response.ok) {
-    document.getElementById("journals").innerHTML = "<p>⚠️ Unable to list journals.</p>";
-    return;
+  const journalsContainer = document.getElementById("journals");
+
+  try {
+    const response = await fetch("journals/index.json");
+    if (!response.ok) throw new Error("Unable to fetch journals/index.json");
+    const files = await response.json();
+
+    if (files.length === 0) {
+      journalsContainer.innerHTML = "<p>No journals found yet.</p>";
+      return;
+    }
+
+    // Lazy-load each journal on expand
+    journalsContainer.innerHTML = files.map(file => {
+      const title = file.replace(".md", "").replace(/[-_]/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+      return `
+        <details>
+          <summary>${title}</summary>
+          <div class="journal-content" data-file="${file}">Loading...</div>
+        </details>
+      `;
+    }).join("");
+
+    // Add event listeners to fetch content when expanded
+    document.querySelectorAll("#journals details").forEach(detail => {
+      detail.addEventListener("toggle", async e => {
+        if (detail.open) {
+          const div = detail.querySelector(".journal-content");
+          if (div.dataset.loaded !== "true") {
+            const file = div.dataset.file;
+            div.innerHTML = await loadMarkdown(`journals/${file}`);
+            div.dataset.loaded = "true";
+          }
+        }
+      });
+    });
+
+  } catch (err) {
+    console.error(err);
+    journalsContainer.innerHTML = "<p>⚠️ Unable to load journals list.</p>";
   }
-
-  const text = await response.text();
-  const parser = new DOMParser();
-  const htmlDoc = parser.parseFromString(text, "text/html");
-  const links = Array.from(htmlDoc.querySelectorAll("a"))
-    .filter(a => a.href.endsWith(".md"));
-
-  if (links.length === 0) {
-    document.getElementById("journals").innerHTML = "<p>No journals found yet.</p>";
-    return;
-  }
-
-  // Create collapsible journal entries
-  let journalHTML = "";
-  for (const link of links) {
-    const file = link.getAttribute("href");
-    const title = file.replace(".md", "").replace(/[-_]/g, " ").replace(/\b\w/g, l => l.toUpperCase());
-    const content = await loadMarkdown(`journals/${file}`);
-    journalHTML += `
-      <details>
-        <summary>${title}</summary>
-        <div>${content}</div>
-      </details>
-    `;
-  }
-
-  document.getElementById("journals").innerHTML = journalHTML;
 }
 
+// Load everything on page load
 window.onload = () => {
   loadREADME();
   loadJournals();
