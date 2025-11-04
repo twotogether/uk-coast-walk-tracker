@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UK Coast Walk Tracker</title>
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    margin: 2rem;
+    line-height: 1.6;
+    background: #f8fafc;
+    color: #1e293b;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+  a {
+    color: #0369a1;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  details {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+  }
+  summary {
+    font-weight: bold;
+    cursor: pointer;
+  }
+  pre, code {
+    background: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+
+<h1>UK Coast Walk Tracker</h1>
+
+<p>🌊 Explore your progress along the UK coastline.</p>
+
+<p><a href="map/index.html" target="_blank">🗺️ View Interactive Map</a></p>
+
+<hr>
+
+<details open>
+  <summary>📘 Project README</summary>
+  <div id="readme">Loading README...</div>
+</details>
+
+<details>
+  <summary>📖 Journals</summary>
+  <div id="journals">Loading journals...</div>
+</details>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+async function loadMarkdown(url) {
+  const response = await fetch(url);
+  if (!response.ok) return `<p>⚠️ Unable to load ${url}</p>`;
+  const text = await response.text();
+  return marked.parse(text);
+}
+
+async function loadREADME() {
+  const readmeContainer = document.getElementById("readme");
+  const html = await loadMarkdown("README.md");
+  readmeContainer.innerHTML = html;
+}
+
+async function loadJournals() {
+  const response = await fetch("journals/");
+  if (!response.ok) {
+    document.getElementById("journals").innerHTML = "<p>⚠️ Unable to list journals.</p>";
+    return;
+  }
+
+  const text = await response.text();
+  const parser = new DOMParser();
+  const htmlDoc = parser.parseFromString(text, "text/html");
+  const links = Array.from(htmlDoc.querySelectorAll("a"))
+    .filter(a => a.href.endsWith(".md"));
+
+  if (links.length === 0) {
+    document.getElementById("journals").innerHTML = "<p>No journals found yet.</p>";
+    return;
+  }
+
+  // Create collapsible journal entries
+  let journalHTML = "";
+  for (const link of links) {
+    const file = link.getAttribute("href");
+    const title = file.replace(".md", "").replace(/[-_]/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+    const content = await loadMarkdown(`journals/${file}`);
+    journalHTML += `
+      <details>
+        <summary>${title}</summary>
+        <div>${content}</div>
+      </details>
+    `;
+  }
+
+  document.getElementById("journals").innerHTML = journalHTML;
+}
+
+window.onload = () => {
+  loadREADME();
+  loadJournals();
+};
+</script>
+
+</body>
+</html>
