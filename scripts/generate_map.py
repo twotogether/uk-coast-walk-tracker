@@ -62,6 +62,10 @@ def update_coastal_walks():
 # --- Step 1: Update walks.yml ---
 new_walks = update_coastal_walks()
 
+# --- Step 1b: Create journal Markdown files for any new walks ---
+from create_journals import create_journals
+create_journals()
+
 # --- Step 2: Load all walks ---
 with open(WALKS_YAML, "r", encoding="utf-8") as f:
     data = yaml.safe_load(f)
