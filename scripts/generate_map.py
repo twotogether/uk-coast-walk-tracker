@@ -100,17 +100,20 @@ for walk in data.get("walks", []):
     if coords:
         walked_km = path_length(coords)
         total_walked_km += walked_km
-
-        # Correct site-relative link
-        journal_url = "/" + str(Path(journal).as_posix())
-        popup_html = f"<b>{name}</b><br><a href='{journal_url}' target='_blank'>View Journal</a>"
-
-        # Highlight newly added walks in green, existing walks in blue
+        
+        # 🔁 Replace this line:
+        # popup_html = f"<b>{name}</b><br><a href='../{journal}'>View Journal</a>"
+        
+        # ✅ With the new version:
+        SITE_ROOT = "https://twotogether.github.io/uk-coast-walk-tracker"
+        journal_posix = Path(journal).with_suffix(".html").as_posix()
+        journal_url = f"{SITE_ROOT}/{journal_posix}"
+        popup_html = f"<b>{name}</b><br><a href='{journal_url}' target='_blank' rel='noopener'>View Journal</a>"
+        
         color = "green" if walk in new_walks else "blue"
         folium.PolyLine(coords, color=color, weight=4, popup=popup_html).add_to(m)
         print(f"✅ Added: {name} — {walked_km:.2f} km")
-    else:
-        print(f"⚠️  No coordinates found for: {name}")
+
 
 # --- Step 5: Fraction of coastline walked ---
 UK_COASTLINE_KM = 19000  # rough estimate
