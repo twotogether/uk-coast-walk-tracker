@@ -1,0 +1,21 @@
+All Walk Sections:
+- region: Angus & Dundee
+  walks:
+  - Arbroath To Auchmithie
+- region: Fife
+  walks:
+  - Aberdour To Kirkcaldy
+- region: Lothian
+  walks:
+  - S Queensferry To Boness
+  - S.Queensferry To Granton
+  - Seafield To Aberlady
+  - Tyninghame To Dunbar
+- region: Moray & Banff
+  walks:
+  - Buckie To Findlater Castle
+- region: Northumberland
+  walks:
+  - Dunstanburgh To Alnmouth
+- region: Unknown
+  walks: []

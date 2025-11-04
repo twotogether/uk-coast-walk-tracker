@@ -4,16 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UK Coast Walk Tracker</title>
+
 <style>
   body {
     font-family: system-ui, sans-serif;
-    margin: 2rem;
-    line-height: 1.6;
+    margin: 0;
+    display: flex;
     background: #f8fafc;
     color: #1e293b;
   }
+  #sidebar {
+    width: 300px;
+    background: #f4f4f4;
+    border-right: 1px solid #ccc;
+    padding: 1rem;
+    overflow-y: auto;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+  #content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    max-width: 100%;
+  }
   h1 {
     font-size: 1.8rem;
+    margin-top: 0;
   }
   a {
     color: #0369a1;
@@ -22,6 +39,17 @@
   }
   a:hover {
     text-decoration: underline;
+  }
+  h2, h3 {
+    margin: 0.5rem 0;
+  }
+  ul {
+    list-style: none;
+    padding-left: 1em;
+    margin: 0.5rem 0;
+  }
+  li {
+    margin-bottom: 0.3em;
   }
   details {
     background: white;
@@ -40,28 +68,28 @@
     border-radius: 4px;
   }
 </style>
+
 </head>
 <body>
 
-<h1>UK Coast Walk Tracker</h1>
+  <div id="sidebar">
+    <h1>UK Coast Walks</h1>
+    <div id="toc">Loading TOC...</div>
+  </div>
 
-<p>Explore your progress along the UK coastline.</p>
-
-<p><a href="map/index.html" target="_blank">🗺️ View Interactive Map</a></p>
-
-<hr>
-
-<details open>
-  <summary>📘 Project README</summary>
-  <div id="readme">Loading README...</div>
-</details>
-
-<details>
-  <summary>📖 Journals</summary>
-  <div id="journals">Loading journals...</div>
-</details>
+  <div id="content">
+    <h1>UK Coast Walk Tracker</h1>
+    <p>Explore your progress along the UK coastline.</p>
+    <p><a href="map/index.html" target="_blank">🗺️ View Interactive Map</a></p>
+    <hr>
+    <div id="journal-content">
+      <p>Select a walk from the sidebar to view its journal.</p>
+    </div>
+  </div>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
+
 <script>
 async function loadMarkdown(url) {
   try {
@@ -74,61 +102,58 @@ async function loadMarkdown(url) {
   }
 }
 
-async function loadREADME() {
-  const readmeContainer = document.getElementById("readme");
-  readmeContainer.innerHTML = await loadMarkdown("README.md");
-}
-
-async function loadJournals() {
-  const journalsContainer = document.getElementById("journals");
+async function loadTOC() {
+  const tocContainer = document.getElementById("toc");
 
   try {
-    const response = await fetch("journals/index.json");
-    if (!response.ok) throw new Error("Unable to fetch journals/index.json");
-    const files = await response.json();
+    const response = await fetch('data/toc.yml');
+    if (!response.ok) throw new Error("Unable to fetch toc.yml");
+    const yamlText = await response.text();
+    const tocData = jsyaml.load(yamlText);
 
-    if (files.length === 0) {
-      journalsContainer.innerHTML = "<p>No journals found yet.</p>";
-      return;
-    }
+    tocContainer.innerHTML = ''; // clear loading text
 
-    // Lazy-load each journal on expand
-    journalsContainer.innerHTML = files.map(file => {
-      const title = file.replace(".md", "").replace(/[-_]/g, " ").replace(/\b\w/g, l => l.toUpperCase());
-      return `
-        <details>
-          <summary>${title}</summary>
-          <div class="journal-content" data-file="${file}">Loading...</div>
-        </details>
-      `;
-    }).join("");
+    for (const section in tocData) {
+      const sectionEl = document.createElement('h2');
+      sectionEl.textContent = section;
+      tocContainer.appendChild(sectionEl);
 
-    // Add event listeners to fetch content when expanded
-    document.querySelectorAll("#journals details").forEach(detail => {
-      detail.addEventListener("toggle", async e => {
-        if (detail.open) {
-          const div = detail.querySelector(".journal-content");
-          if (div.dataset.loaded !== "true") {
-            const file = div.dataset.file;
-            div.innerHTML = await loadMarkdown(`journals/${file}`);
-            div.dataset.loaded = "true";
-          }
-        }
+      tocData[section].forEach(regionBlock => {
+        // 👇 Skip the "Unknown" region from being displayed
+        if (regionBlock.region.toLowerCase() === "unknown") return;
+
+        const regionTitle = document.createElement('h3');
+        regionTitle.textContent = regionBlock.region;
+        tocContainer.appendChild(regionTitle);
+
+        const ul = document.createElement('ul');
+        regionBlock.walks.forEach(walkName => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = "#"; // prevent default navigation
+          a.textContent = walkName;
+          a.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const journalDiv = document.getElementById("journal-content");
+            journalDiv.innerHTML = "Loading...";
+            journalDiv.innerHTML = await loadMarkdown(
+              `journals/${walkName.replace(/ /g,'-').toLowerCase()}.md`
+            );
+          });
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        tocContainer.appendChild(ul);
       });
-    });
-
+    }
   } catch (err) {
     console.error(err);
-    journalsContainer.innerHTML = "<p>⚠️ Unable to load journals list.</p>";
+    tocContainer.innerHTML = "<p>⚠️ Unable to load TOC.</p>";
   }
 }
 
-// Load everything on page load
+// Load TOC on page load
 window.onload = () => {
-  loadREADME();
-  loadJournals();
+  loadTOC();
 };
 </script>
-
-</body>
-</html>

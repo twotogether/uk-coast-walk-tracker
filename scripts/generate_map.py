@@ -66,6 +66,10 @@ new_walks = update_coastal_walks()
 from create_journals import create_journals
 create_journals()
 
+# --- Step 1c: Generate or update TOC ---
+from create_toc import create_toc
+create_toc()  # <-- This will update toc.yml based on the journals folder
+
 # --- Step 2: Load all walks ---
 with open(WALKS_YAML, "r", encoding="utf-8") as f:
     data = yaml.safe_load(f)
@@ -96,7 +100,10 @@ for walk in data.get("walks", []):
     if coords:
         walked_km = path_length(coords)
         total_walked_km += walked_km
-        popup_html = f"<b>{name}</b><br><a href='../{journal}'>View Journal</a>"
+
+        # Correct site-relative link
+        journal_url = "/" + str(Path(journal).as_posix())
+        popup_html = f"<b>{name}</b><br><a href='{journal_url}' target='_blank'>View Journal</a>"
 
         # Highlight newly added walks in green, existing walks in blue
         color = "green" if walk in new_walks else "blue"
