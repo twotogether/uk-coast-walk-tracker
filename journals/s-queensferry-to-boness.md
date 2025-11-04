@@ -1,4 +1,4 @@
-# S Queensferry To Boness
+# South Queensferry To Boness
 
 | Section Walked  | Distance | Date |
 | -------- | ------- | ---- |
