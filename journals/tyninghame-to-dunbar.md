@@ -7,4 +7,4 @@
 
 ## Notes
 
-- Walked as part of the John Muir way from East Linton to Dunbar.
+- Walked as part of the John Muir way from East Linton to Dunbar. You can see some photos of the Dunbar Cliff Walk [here](https://two-together.com/east-linton-to-dunbar-walk/).

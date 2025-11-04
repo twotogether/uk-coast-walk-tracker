@@ -1,5 +1,6 @@
 import yaml
 import folium
+import json
 import gpxpy
 from pathlib import Path
 from geopy.distance import geodesic
@@ -9,6 +10,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent  # project root
 GPX_COAST_DIR = BASE_DIR / "gpx"
 WALKS_YAML = BASE_DIR / "data" / "walks.yaml"
 MAP_DIR = BASE_DIR / "map"
+DATA_DIR = BASE_DIR / "data"
+DATA_DIR.mkdir(exist_ok=True)
+
 
 # --- Helper functions ---
 def path_length(coords):
@@ -121,6 +125,14 @@ fraction_covered = total_walked_km / UK_COASTLINE_KM
 print(f"\n🌊 Total distance walked: {total_walked_km:.2f} km")
 print(f"🌊 Fraction of UK coastline walked: {fraction_covered:.2%}")
 
+distance_info = {
+    "totalKm": total_walked_km,
+    "fraction": fraction_covered
+}
+
+with open(DATA_DIR / "distance.json", "w", encoding="utf-8") as f:
+    json.dump(distance_info, f, indent=2)
+
 # --- Step 6: Save map ---
 MAP_DIR.mkdir(exist_ok=True)
 m.save(MAP_DIR / "index.html")
@@ -131,3 +143,14 @@ if new_walks:
     print("\n🆕 Newly added GPX walks this run:")
     for w in new_walks:
         print(f" - {w['gpx']}")
+
+# Save distance info to JSON
+distance_info = {
+    "totalKm": total_walked_km,
+    "fraction": fraction_covered
+}
+
+with open(DATA_DIR / "distance.json", "w", encoding="utf-8") as f:
+    json.dump(distance_info, f, indent=2)
+
+print(f"\n✅ distance.json saved to {DATA_DIR / 'distance.json'}")

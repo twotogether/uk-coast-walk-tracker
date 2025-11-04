@@ -16,7 +16,7 @@
     overflow: hidden;
   }
 
-  /* --- Sidebar --- */
+  /* Sidebar */
   #sidebar {
     width: 300px;
     background: #f4f4f4;
@@ -26,19 +26,17 @@
     box-sizing: border-box;
   }
 
-  #sidebar-header {
+  #sidebar h1 {
+    font-size: 1.3rem;
     padding: 1rem;
+    margin: 0;
     border-bottom: 1px solid #ccc;
     background: #e2e8f0;
   }
 
-  #sidebar-header h1 {
-    font-size: 1.3rem;
-    margin: 0 0 0.5rem 0;
-  }
-
-  #sidebar-header a {
+  #sidebar a.map-link {
     display: inline-block;
+    margin: 0.5rem 1rem;
     background: #0369a1;
     color: white;
     padding: 0.4rem 0.8rem;
@@ -47,17 +45,25 @@
     font-weight: 600;
   }
 
-  #sidebar-header a:hover {
+  #sidebar a.map-link:hover {
     background: #075985;
+  }
+
+  #distance-info {
+    background: #e0f2fe;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    margin: 0.5rem 1rem 1rem 1rem;
+    font-size: 0.9rem;
+    color: #1e293b;
   }
 
   #toc {
     flex: 1;
     overflow-y: auto;
-    padding: 1rem;
+    padding: 0 1rem 1rem 1rem;
   }
 
-  /* --- TOC Styling --- */
   h2, h3 {
     margin: 0.5rem 0;
   }
@@ -76,17 +82,18 @@
     color: #0369a1;
     text-decoration: none;
     font-weight: 600;
+    cursor: pointer;
   }
 
   a:hover {
     text-decoration: underline;
   }
 
-  /* --- Content area --- */
+  /* Main content */
   #content {
     flex: 1;
     overflow-y: auto;
-    padding: 2rem;
+    padding: 1rem 2rem;
   }
 
   iframe {
@@ -97,7 +104,6 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 
-  /* --- Back to Map button --- */
   #back-button {
     display: inline-block;
     margin-bottom: 1rem;
@@ -120,10 +126,9 @@
 
   <!-- Sidebar -->
   <div id="sidebar">
-    <div id="sidebar-header">
-      <h1>UK Coast Walks</h1>
-      <a href="#" id="home-link">🏠 View Map</a>
-    </div>
+    <h1>UK Coast Walks</h1>
+    <a href="#" class="map-link" id="home-link">🗺️ View Map</a>
+    <div id="distance-info">Loading distance info...</div>
     <div id="toc">Loading TOC...</div>
   </div>
 
@@ -156,7 +161,7 @@ async function loadTOC() {
     const yamlText = await response.text();
     const tocData = jsyaml.load(yamlText);
 
-    tocContainer.innerHTML = ''; // clear loading text
+    tocContainer.innerHTML = '';
 
     for (const section in tocData) {
       const sectionEl = document.createElement('h2');
@@ -164,8 +169,7 @@ async function loadTOC() {
       tocContainer.appendChild(sectionEl);
 
       tocData[section].forEach(regionBlock => {
-        // Hide "Unknown" region
-        if (regionBlock.region.toLowerCase() === "unknown") return;
+        if (!regionBlock.region || regionBlock.region.toLowerCase() === "unknown") return;
 
         const regionTitle = document.createElement('h3');
         regionTitle.textContent = regionBlock.region;
@@ -175,12 +179,12 @@ async function loadTOC() {
         regionBlock.walks.forEach(walkName => {
           const li = document.createElement('li');
           const a = document.createElement('a');
-          a.href = "#";
-          a.textContent = walkName;
+
+          // Clicking replaces the map with markdown
           a.addEventListener('click', async (e) => {
             e.preventDefault();
             const content = document.getElementById("content");
-            content.innerHTML = "Loading...";
+            content.innerHTML = `<p>Loading ${walkName}...</p>`;
             const markdown = await loadMarkdown(`journals/${walkName.replace(/ /g,'-').toLowerCase()}.md`);
             content.innerHTML = `
               <a id="back-button">🏠 Back to Map</a>
@@ -188,6 +192,8 @@ async function loadTOC() {
             `;
             document.getElementById("back-button").addEventListener("click", loadMapView);
           });
+
+          a.textContent = walkName;
           li.appendChild(a);
           ul.appendChild(li);
         });
@@ -200,19 +206,40 @@ async function loadTOC() {
   }
 }
 
+// Show map in iframe
 function loadMapView() {
   const content = document.getElementById("content");
   content.innerHTML = `<iframe id="content-frame" src="map/index.html"></iframe>`;
 }
 
-// Home link on sidebar
+// Home link
 document.getElementById("home-link").addEventListener("click", (e) => {
   e.preventDefault();
   loadMapView();
 });
 
+// Load distance info
+async function loadDistanceInfo() {
+  try {
+    const response = await fetch("data/distance.json");
+    if (!response.ok) throw new Error("Cannot load distance.json");
+    const data = await response.json();
+    const infoDiv = document.getElementById("distance-info");
+    infoDiv.innerHTML = `
+      🌊 Total walked: <b>${data.totalKm.toFixed(2)} km</b><br>
+      🌊 Fraction of UK coastline: <b>${(data.fraction*100).toFixed(2)}%</b>
+    `;
+  } catch (err) {
+    console.error(err);
+    document.getElementById("distance-info").textContent = "⚠️ Unable to load distance info";
+  }
+}
+
 // Initialize
-window.onload = loadTOC;
+window.onload = () => {
+  loadTOC();
+  loadDistanceInfo();
+};
 </script>
 
 </body>
