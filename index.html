@@ -12,79 +12,124 @@
     display: flex;
     background: #f8fafc;
     color: #1e293b;
+    height: 100vh;
+    overflow: hidden;
   }
+
+  /* --- Sidebar --- */
   #sidebar {
     width: 300px;
     background: #f4f4f4;
     border-right: 1px solid #ccc;
-    padding: 1rem;
-    overflow-y: auto;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
   }
-  #content {
-    flex: 1;
-    padding: 2rem;
-    overflow-y: auto;
-    max-width: 100%;
+
+  #sidebar-header {
+    padding: 1rem;
+    border-bottom: 1px solid #ccc;
+    background: #e2e8f0;
   }
-  h1 {
-    font-size: 1.8rem;
-    margin-top: 0;
+
+  #sidebar-header h1 {
+    font-size: 1.3rem;
+    margin: 0 0 0.5rem 0;
   }
-  a {
-    color: #0369a1;
+
+  #sidebar-header a {
+    display: inline-block;
+    background: #0369a1;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
     text-decoration: none;
     font-weight: 600;
   }
-  a:hover {
-    text-decoration: underline;
+
+  #sidebar-header a:hover {
+    background: #075985;
   }
+
+  #toc {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  /* --- TOC Styling --- */
   h2, h3 {
     margin: 0.5rem 0;
   }
+
   ul {
     list-style: none;
     padding-left: 1em;
     margin: 0.5rem 0;
   }
+
   li {
     margin-bottom: 0.3em;
   }
-  details {
-    background: white;
+
+  a {
+    color: #0369a1;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* --- Content area --- */
+  #content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+  }
+
+  iframe {
+    border: none;
+    width: 100%;
+    height: 85vh;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 1rem;
-    padding: 0.5rem 1rem;
   }
-  summary {
-    font-weight: bold;
+
+  /* --- Back to Map button --- */
+  #back-button {
+    display: inline-block;
+    margin-bottom: 1rem;
+    background: #0369a1;
+    color: white;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
     cursor: pointer;
   }
-  pre, code {
-    background: #f1f5f9;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
+
+  #back-button:hover {
+    background: #075985;
   }
 </style>
-
 </head>
+
 <body>
 
+  <!-- Sidebar -->
   <div id="sidebar">
-    <h1>UK Coast Walks</h1>
+    <div id="sidebar-header">
+      <h1>UK Coast Walks</h1>
+      <a href="#" id="home-link">🏠 View Map</a>
+    </div>
     <div id="toc">Loading TOC...</div>
   </div>
 
+  <!-- Main content -->
   <div id="content">
-    <h1>UK Coast Walk Tracker</h1>
-    <p>Explore your progress along the UK coastline.</p>
-    <p><a href="map/index.html" target="_blank">🗺️ View Interactive Map</a></p>
-    <hr>
-    <div id="journal-content">
-      <p>Select a walk from the sidebar to view its journal.</p>
-    </div>
+    <iframe id="content-frame" src="map/index.html"></iframe>
   </div>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -119,7 +164,7 @@ async function loadTOC() {
       tocContainer.appendChild(sectionEl);
 
       tocData[section].forEach(regionBlock => {
-        // 👇 Skip the "Unknown" region from being displayed
+        // Hide "Unknown" region
         if (regionBlock.region.toLowerCase() === "unknown") return;
 
         const regionTitle = document.createElement('h3');
@@ -130,15 +175,18 @@ async function loadTOC() {
         regionBlock.walks.forEach(walkName => {
           const li = document.createElement('li');
           const a = document.createElement('a');
-          a.href = "#"; // prevent default navigation
+          a.href = "#";
           a.textContent = walkName;
           a.addEventListener('click', async (e) => {
             e.preventDefault();
-            const journalDiv = document.getElementById("journal-content");
-            journalDiv.innerHTML = "Loading...";
-            journalDiv.innerHTML = await loadMarkdown(
-              `journals/${walkName.replace(/ /g,'-').toLowerCase()}.md`
-            );
+            const content = document.getElementById("content");
+            content.innerHTML = "Loading...";
+            const markdown = await loadMarkdown(`journals/${walkName.replace(/ /g,'-').toLowerCase()}.md`);
+            content.innerHTML = `
+              <a id="back-button">🏠 Back to Map</a>
+              ${markdown}
+            `;
+            document.getElementById("back-button").addEventListener("click", loadMapView);
           });
           li.appendChild(a);
           ul.appendChild(li);
@@ -152,8 +200,20 @@ async function loadTOC() {
   }
 }
 
-// Load TOC on page load
-window.onload = () => {
-  loadTOC();
-};
+function loadMapView() {
+  const content = document.getElementById("content");
+  content.innerHTML = `<iframe id="content-frame" src="map/index.html"></iframe>`;
+}
+
+// Home link on sidebar
+document.getElementById("home-link").addEventListener("click", (e) => {
+  e.preventDefault();
+  loadMapView();
+});
+
+// Initialize
+window.onload = loadTOC;
 </script>
+
+</body>
+</html>
