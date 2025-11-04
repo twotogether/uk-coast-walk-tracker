@@ -34,4 +34,4 @@ This tool allows you to log GPX walks, generate a map of the coastline you’ve 
 
 The map will be saved in the map/ folder.
 
-[View Map](map/index.html)
+[View Map](https://twotogether.github.io/uk-coast-walk-tracker/map/index.html)
