@@ -2,7 +2,10 @@
 
 | Section Walked    | Distance | Date |
 | -------- | ------- | ---- |
-| Auchmithie to Arbroath  |    | 2022 
+| Auchmithie to Arbroath  |  6.5 km  | 2022 
 
 
 ## Notes
+
+- Photos and walk report on [Walking The Arbroath Cliff Trail: From Auchmithie to Arbroath
+](https://two-together.com/arbroath-cliff-trail/).
