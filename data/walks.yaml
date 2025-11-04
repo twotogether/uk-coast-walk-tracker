@@ -1,10 +1,4 @@
 walks:
-- name: S.Queensferry To Granton
-  gpx: gpx/s.queensferry-to-granton.gpx
-  journal: journals\s.queensferry-to-granton.md
-- name: S Queensferry To Boness
-  gpx: gpx/s-queensferry-to-boness.gpx
-  journal: journals\s-queensferry-to-boness.md
 - name: Seafield To Aberlady
   gpx: gpx/seafield-to-aberlady.gpx
   journal: journals\seafield-to-aberlady.md
@@ -23,3 +17,9 @@ walks:
 - name: Dunstanburgh To Alnmouth
   gpx: gpx/dunstanburgh-to-alnmouth.gpx
   journal: journals\dunstanburgh-to-alnmouth.md
+- name: South Queensferry To Boness
+  gpx: gpx/south-queensferry-to-boness.gpx
+  journal: journals\south-queensferry-to-boness.md
+- name: South Queensferry To Granton
+  gpx: gpx/south-queensferry-to-granton.gpx
+  journal: journals\south-queensferry-to-granton.md
