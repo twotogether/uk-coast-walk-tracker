@@ -1,12 +1,13 @@
 from pathlib import Path
 import yaml
+import json
 
 def create_journals():
     """
     Creates Markdown journal files for each walk in walks.yaml.
     - Only creates missing files.
     - Does NOT overwrite or modify existing ones.
-    - Uses a consistent markdown template.
+    - Also generates journals/index.json for GitHub Pages.
     """
     BASE_DIR = Path(__file__).resolve().parent.parent
     WALKS_YAML = BASE_DIR / "data" / "walks.yaml"
@@ -47,9 +48,20 @@ f"# {name}\n\n"
             md_path.write_text(md_template, encoding="utf-8")
             new_files.append(md_filename)
 
+    # --- Create JSON index for GitHub Pages ---
+    md_files = [f.name for f in JOURNALS_DIR.glob("*.md")]
+    index_file = JOURNALS_DIR / "index.json"
+    index_file.write_text(json.dumps(md_files, indent=2), encoding="utf-8")
+
+    print(f"📁 journals/index.json updated with {len(md_files)} entries.")
+
     if new_files:
-        print(f"\n📝 Created {len(new_files)} new journal file(s):")
+        print(f"📝 Created {len(new_files)} new journal file(s):")
         for f in new_files:
             print(f"   - {f}")
     else:
         print("\nℹ️ No new journal files created (all exist already).")
+
+# Run automatically when imported in your main script
+if __name__ == "__main__":
+    create_journals()
