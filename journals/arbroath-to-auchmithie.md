@@ -1,8 +1,10 @@
 # Arbroath To Auchmithie
 
+## Route
+
 | Section Walked    | Distance | Date |
 | -------- | ------- | ---- |
-| Auchmithie to Arbroath  |  6.5 km  | 2022 
+| Auchmithie to Arbroath  |  6.5 km  | 28/5/2022 
 
 
 ## Notes

@@ -1,5 +1,7 @@
 # Tyninghame To Dunbar
 
+## Route
+
 | Section Walked   | Distance | Date |
 | -------- | ------- | ---- |
 | Tyninghame to Dunbar  |    | 29/8/2025

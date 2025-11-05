@@ -23,3 +23,6 @@ walks:
 - name: South Queensferry To Granton
   gpx: gpx/south-queensferry-to-granton.gpx
   journal: journals\south-queensferry-to-granton.md
+- name: John O'Groats To Duncansby Stacks
+  gpx: gpx/john-o'groats-to-duncansby-stacks.gpx
+  journal: journals\john-o'groats-to-duncansby-stacks.md

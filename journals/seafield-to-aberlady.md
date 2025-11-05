@@ -1,5 +1,7 @@
 # Seafield To Aberlady
 
+## Route
+
 | Section Walked   | Distance | Date |
 | -------- | ------- | ---- |
 | Seafield to Joppa  |    | Various dates
@@ -10,3 +12,4 @@
 ## Notes
 
 - Some sections walked as part of the John Muir way.
+- Read the walk report and see photos from the Prestonpans to Aberlady section on our [two-together blog](https://two-together.com/prestonpans-to-aberlady-walk/).

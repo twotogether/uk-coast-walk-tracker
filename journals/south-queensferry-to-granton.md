@@ -1,5 +1,7 @@
 # South Queensferry To Granton
 
+## Route
+
 | Section Walked   | Distance | Date |
 | -------- | ------- | ---- |
 | South Queensferry to Cramond  |    | Various dates

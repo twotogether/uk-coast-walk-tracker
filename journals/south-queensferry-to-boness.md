@@ -1,5 +1,7 @@
 # South Queensferry To Boness
 
+## Route
+
 | Section Walked  | Distance | Date |
 | -------- | ------- | ---- |
 |  South Queensferry to Boness | 15 km   | 5/7/2025

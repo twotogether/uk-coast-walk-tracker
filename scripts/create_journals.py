@@ -36,6 +36,7 @@ def create_journals():
         # Markdown template
         md_template = (
 f"# {name}\n\n"
+"## Route\n\n"
 "| Section Walked   | Distance | Date |\n"
 "| -------- | ------- | ---- |\n"
 "|   |    | \n"
