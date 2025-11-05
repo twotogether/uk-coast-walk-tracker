@@ -14,7 +14,7 @@ This tool allows you to log GPX walks, generate a map of the coastline you’ve 
 
 ## How to Use This
 
-1. Clone this repo.
+1. Fork this repo.
 
 2. Place your GPX files in the `gpx` folder following the naming convention:
 
