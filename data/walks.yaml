@@ -1,7 +1,4 @@
 walks:
-- name: Seafield To Aberlady
-  gpx: gpx/seafield-to-aberlady.gpx
-  journal: journals\seafield-to-aberlady.md
 - name: Aberdour To Kirkcaldy
   gpx: gpx/aberdour-to-kirkcaldy.gpx
   journal: journals\aberdour-to-kirkcaldy.md
@@ -26,3 +23,6 @@ walks:
 - name: John O'Groats To Duncansby Stacks
   gpx: gpx/john-o'groats-to-duncansby-stacks.gpx
   journal: journals\john-o'groats-to-duncansby-stacks.md
+- name: Leith To Aberlady
+  gpx: gpx/leith-to-aberlady.gpx
+  journal: journals\leith-to-aberlady.md

@@ -4,8 +4,8 @@
 
 | Section Walked   | Distance | Date |
 | -------- | ------- | ---- |
-| South Queensferry to Cramond  |    | Various dates
-| Cramond to Granton  |    |  Various dates
+| South Queensferry to Cramond  | 10.3 km   | Various dates
+| Cramond to Granton  | 6.3 km   |  Various dates
 
 ## Notes
 

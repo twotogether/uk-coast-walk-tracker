@@ -4,8 +4,8 @@
 
 | Section Walked   | Distance | Date |
 | -------- | ------- | ---- | 
-| Findochty to Buckie  |    | 26/5/2023 |
-| Findochty to Findlater Castle  |    | 27/5/2023
+| Findochty to Buckie  |  5.8 km  | 26/5/2023 |
+| Findochty to Findlater Castle  |  16 km  | 27/5/2023
 
 ## Notes
 

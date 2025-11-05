@@ -4,7 +4,7 @@
 
 | Section Walked   | Distance | Date |
 | -------- | ------- | ---- |
-| Tyninghame to Dunbar  |    | 29/8/2025
+| Tyninghame to Dunbar  |  7.16 km  | 29/8/2025
 
 
 ## Notes
