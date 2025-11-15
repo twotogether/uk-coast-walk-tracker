@@ -26,3 +26,6 @@ walks:
 - name: Leith To Aberlady
   gpx: gpx/leith-to-aberlady.gpx
   journal: journals\leith-to-aberlady.md
+- name: Leith To Granton
+  gpx: gpx/leith-to-granton.gpx
+  journal: journals\leith-to-granton.md

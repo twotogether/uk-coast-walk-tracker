@@ -68,14 +68,26 @@
     margin: 0.5rem 0;
   }
 
+  /* Bullet styling */
   ul {
     list-style: none;
-    padding-left: 1em;
+    padding-left: 1rem;
     margin: 0.5rem 0;
   }
 
   li {
-    margin-bottom: 0.3em;
+    position: relative;
+    margin: 0.4rem 0;
+    padding-left: 0.8rem;
+  }
+
+  li::before {
+    content: "•";
+    position: absolute;
+    left: -0.6rem;
+    top: 0;
+    font-size: 1.2rem;
+    color: #0369a1;
   }
 
   a {
@@ -119,6 +131,16 @@
   #back-button:hover {
     background: #075985;
   }
+
+  /* Markdown images */
+  #content img {
+    max-width: 100%;
+    display: block;
+    margin: 1rem auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  }
+
 </style>
 </head>
 
@@ -141,6 +163,15 @@
 <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
 
 <script>
+/* ------------------------ */
+/* IMPORTANT: Fix image bug */
+/* ------------------------ */
+marked.setOptions({
+  mangle: false,
+  headerIds: false,
+  sanitize: false   // ← This is the fix
+});
+
 async function loadMarkdown(url) {
   try {
     const response = await fetch(url);
@@ -180,7 +211,6 @@ async function loadTOC() {
           const li = document.createElement('li');
           const a = document.createElement('a');
 
-          // Clicking replaces the map with markdown
           a.addEventListener('click', async (e) => {
             e.preventDefault();
             const content = document.getElementById("content");
@@ -206,19 +236,16 @@ async function loadTOC() {
   }
 }
 
-// Show map in iframe
 function loadMapView() {
   const content = document.getElementById("content");
   content.innerHTML = `<iframe id="content-frame" src="map/index.html"></iframe>`;
 }
 
-// Home link
 document.getElementById("home-link").addEventListener("click", (e) => {
   e.preventDefault();
   loadMapView();
 });
 
-// Load distance info
 async function loadDistanceInfo() {
   try {
     const response = await fetch("data/distance.json");
@@ -235,7 +262,6 @@ async function loadDistanceInfo() {
   }
 }
 
-// Initialize
 window.onload = () => {
   loadTOC();
   loadDistanceInfo();
