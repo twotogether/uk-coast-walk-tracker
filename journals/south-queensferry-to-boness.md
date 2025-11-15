@@ -10,8 +10,6 @@
 ## Notes
 
 - Walked as part of the John Muir Way.
-- There are no public toilets along the way. The ones in South Queensferry is on the High Street, and the ones in Blackness have closed. There are public toilets in Bo'ness: 
-- Blackness has an 
 - Read about this section on my blog: [South Queensferry to Bo'ness walk](https://two-together.com/south-queensferry-to-boness-walk/).
 
 ### Places Along the Way
