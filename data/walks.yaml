@@ -1,33 +1,31 @@
 walks:
-- name: Aberdour To Kirkcaldy
-  gpx: gpx/aberdour-to-kirkcaldy.gpx
-  journal: journals\aberdour-to-kirkcaldy.md
-- name: Buckie To Findlater Castle
-  gpx: gpx/buckie-to-findlater-castle.gpx
-  journal: journals\buckie-to-findlater-castle.md
 - name: Arbroath To Auchmithie
-  gpx: gpx/arbroath-to-auchmithie.gpx
-  journal: journals\arbroath-to-auchmithie.md
-- name: Tyninghame To Dunbar
-  gpx: gpx/tyninghame-to-dunbar.gpx
-  journal: journals\tyninghame-to-dunbar.md
-  images: images\dunbar-cliffs.jpg
-- name: Dunstanburgh To Alnmouth
-  gpx: gpx/dunstanburgh-to-alnmouth.gpx
-  journal: journals\dunstanburgh-to-alnmouth.md
-- name: South Queensferry To Boness
-  gpx: gpx/south-queensferry-to-boness.gpx
-  journal: journals\south-queensferry-to-boness.md
-- name: South Queensferry To Granton
-  gpx: gpx/south-queensferry-to-granton.gpx
-  journal: journals\south-queensferry-to-granton.md
+  gpx: gpx/angus-dundee/arbroath-to-auchmithie.gpx
+  journal: journals/angus-dundee/arbroath-to-auchmithie.md
 - name: John O'Groats To Duncansby Stacks
-  gpx: gpx/john-o'groats-to-duncansby-stacks.gpx
-  journal: journals\john-o'groats-to-duncansby-stacks.md
+  gpx: gpx/caithness/john-o'groats-to-duncansby-stacks.gpx
+  journal: journals/caithness/john-o'groats-to-duncansby-stacks.md
+- name: Aberdour To Kirkcaldy
+  gpx: gpx/fife/aberdour-to-kirkcaldy.gpx
+  journal: journals/fife/aberdour-to-kirkcaldy.md
 - name: Leith To Aberlady
-  gpx: gpx/leith-to-aberlady.gpx
-  journal: journals\leith-to-aberlady.md
+  gpx: gpx/lothian/leith-to-aberlady.gpx
+  journal: journals/lothian/leith-to-aberlady.md
 - name: Leith To Granton
-  gpx: gpx/leith-to-granton.gpx
-  journal: journals\leith-to-granton.md
-
+  gpx: gpx/lothian/leith-to-granton.gpx
+  journal: journals/lothian/leith-to-granton.md
+- name: South Queensferry To Boness
+  gpx: gpx/lothian/south-queensferry-to-boness.gpx
+  journal: journals/lothian/south-queensferry-to-boness.md
+- name: South Queensferry To Granton
+  gpx: gpx/lothian/south-queensferry-to-granton.gpx
+  journal: journals/lothian/south-queensferry-to-granton.md
+- name: Tyninghame To Dunbar
+  gpx: gpx/lothian/tyninghame-to-dunbar.gpx
+  journal: journals/lothian/tyninghame-to-dunbar.md
+- name: Buckie To Findlater Castle
+  gpx: gpx/moray-banff/buckie-to-findlater-castle.gpx
+  journal: journals/moray-banff/buckie-to-findlater-castle.md
+- name: Dunstanburgh To Alnmouth
+  gpx: gpx/northumberland/dunstanburgh-to-alnmouth.gpx
+  journal: journals/northumberland/dunstanburgh-to-alnmouth.md

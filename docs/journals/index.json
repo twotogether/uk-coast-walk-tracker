@@ -1,12 +1,12 @@
 [
-  "aberdour-to-kirkcaldy.md",
-  "arbroath-to-auchmithie.md",
-  "buckie-to-findlater-castle.md",
-  "dunstanburgh-to-alnmouth.md",
-  "john-o'groats-to-duncansby-stacks.md",
-  "leith-to-aberlady.md",
-  "leith-to-granton.md",
-  "south-queensferry-to-boness.md",
-  "south-queensferry-to-granton.md",
-  "tyninghame-to-dunbar.md"
+  "angus-dundee/arbroath-to-auchmithie.md",
+  "caithness/john-o'groats-to-duncansby-stacks.md",
+  "fife/aberdour-to-kirkcaldy.md",
+  "lothian/leith-to-aberlady.md",
+  "lothian/leith-to-granton.md",
+  "lothian/south-queensferry-to-boness.md",
+  "lothian/south-queensferry-to-granton.md",
+  "lothian/tyninghame-to-dunbar.md",
+  "moray-banff/buckie-to-findlater-castle.md",
+  "northumberland/dunstanburgh-to-alnmouth.md"
 ]

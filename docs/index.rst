@@ -3,7 +3,7 @@ UK Coast Walk Tracker
 
 .. raw:: html
 
-    <iframe src="map/index.html" width="100%" height="600px" style="border:1px solid #ccc; border-radius:8px;"></iframe>
+    <iframe src="_static/map/index.html" width="100%" height="600px" style="border:1px solid #ccc; border-radius:8px;"></iframe>
 
 
 .. toctree::
@@ -12,11 +12,7 @@ UK Coast Walk Tracker
    :glob:
    :hidden:
 
-   journals/leith-to-aberlady
-   journals/leith-to-granton
-   journals/south-queensferry-to-boness
-   journals/south-queensferry-to-granton
-   journals/tyninghame-to-dunbar
+   journals/lothian/*
 
 .. toctree::
    :maxdepth: 1
@@ -24,7 +20,7 @@ UK Coast Walk Tracker
    :glob:
    :hidden:
 
-   journals/arbroath-to-auchmithie
+   journals/angus-dundee/*
 
 .. toctree::
    :maxdepth: 1
@@ -32,7 +28,7 @@ UK Coast Walk Tracker
    :glob:
    :hidden:
 
-   journals/john-o-groats-to-duncansby-stacks
+   journals/caithness/*
 
 .. toctree::
    :maxdepth: 1
@@ -40,7 +36,7 @@ UK Coast Walk Tracker
    :glob:
    :hidden:
 
-   journals/aberdour-to-kirkcaldy
+   journals/fife/*
 
 .. toctree::
    :maxdepth: 1
@@ -48,7 +44,7 @@ UK Coast Walk Tracker
    :glob:
    :hidden:
 
-   journals/buckie-to-findlater-castle
+   journals/moray-banff/*
 
 .. toctree::
    :maxdepth: 1
@@ -56,4 +52,4 @@ UK Coast Walk Tracker
    :glob:
    :hidden:
 
-   journals/dunstanburgh-to-alnmouth
+   journals/northumberland/*

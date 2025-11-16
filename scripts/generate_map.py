@@ -8,20 +8,24 @@ from geopy.distance import geodesic
 
 # --- Setup paths ---
 BASE_DIR = Path(__file__).resolve().parent.parent  # project root
-GPX_COAST_DIR = BASE_DIR / "gpx"
+GPX_DIR = BASE_DIR / "gpx"
 WALKS_YAML = BASE_DIR / "data" / "walks.yaml"
 DATA_DIR = BASE_DIR / "data"
+MAP_DIR = BASE_DIR / "docs" / "_static" / "map"
+JOURNALS_DIR = BASE_DIR / "docs" / "journals"
 
-# Updated: map inside Sphinx _static
-MAP_DIR = BASE_DIR / "docs" / "map"
 MAP_DIR.mkdir(parents=True, exist_ok=True)
+JOURNALS_DIR.mkdir(parents=True, exist_ok=True)
 
-# --- Make scripts importable ---
+# Make scripts importable
 SCRIPTS_DIR = BASE_DIR / "scripts"
 sys.path.insert(0, str(SCRIPTS_DIR))
 from create_journals import create_journals
 
-# --- Helper functions ---
+
+# ---------------------------------
+# Helper function: compute distance
+# ---------------------------------
 def path_length(coords):
     """Compute length of a path in kilometers."""
     total = 0.0
@@ -29,10 +33,14 @@ def path_length(coords):
         total += geodesic(coords[i - 1], coords[i]).kilometers
     return total
 
+
+# ---------------------------------
+# Step 1 — Update walks.yaml
+# ---------------------------------
 def update_coastal_walks():
-    """Scan GPX coast folder and update walks.yml with any new GPX files."""
-    if not GPX_COAST_DIR.exists():
-        print(f"⚠️  GPX folder does not exist: {GPX_COAST_DIR}")
+    """Scan all GPX subfolders and update walks.yaml."""
+    if not GPX_DIR.exists():
+        print(f"⚠️ GPX folder does not exist: {GPX_DIR}")
         return []
 
     with open(WALKS_YAML, "r", encoding="utf-8") as f:
@@ -41,79 +49,108 @@ def update_coastal_walks():
     if "walks" not in data:
         data["walks"] = []
 
-    existing_gpx = {str(Path(w["gpx"]).as_posix()) for w in data["walks"]}
+    existing_gpx = {walk["gpx"] for walk in data["walks"]}
     new_walks_added = []
 
-    for gpx_file in GPX_COAST_DIR.glob("*.gpx"):
-        relative_path = str(gpx_file.relative_to(BASE_DIR).as_posix())
+    # Recursive GPX scan
+    for gpx_file in GPX_DIR.rglob("*.gpx"):
+        relative_path = gpx_file.relative_to(BASE_DIR).as_posix()
+
         if relative_path not in existing_gpx:
             name = gpx_file.stem.replace("-", " ").title()
-            journal_path = Path("docs/journals") / (gpx_file.stem + ".md")
+
+            # Determine region folder based on GPX subfolder
+            region_folder = gpx_file.relative_to(GPX_DIR).parent.as_posix()
+            journal_md = f"journals/{region_folder}/{gpx_file.stem}.md"
 
             new_walk = {
                 "name": name,
                 "gpx": relative_path,
-                "journal": f"journals/{gpx_file.stem}.md"  # Sphinx expects relative to docs/
+                "journal": journal_md,
             }
 
             data["walks"].append(new_walk)
             new_walks_added.append(new_walk)
 
+    # Save updates
     if new_walks_added:
         with open(WALKS_YAML, "w", encoding="utf-8") as f:
             yaml.dump(data, f, sort_keys=False)
-        print(f"✅ walks.yml updated with {len(new_walks_added)} new GPX file(s).")
+        print(f"✅ walks.yaml updated with {len(new_walks_added)} new GPX file(s).")
     else:
         print("ℹ️ No new GPX files found.")
 
     return new_walks_added
 
-# --- Step 1: Update walks.yml ---
+
 new_walks = update_coastal_walks()
 
-# --- Step 2: Create journals ---
+
+# ---------------------------------
+# Step 2 — Generate journals
+# ---------------------------------
 create_journals()
 
-# --- Step 3: Load all walks ---
+
+# ---------------------------------
+# Step 3 — Load updated YAML
+# ---------------------------------
 with open(WALKS_YAML, "r", encoding="utf-8") as f:
     data = yaml.safe_load(f)
 
-# --- Step 4: Initialize map ---
-m = folium.Map(location=[54.5, -3.0], zoom_start=6, tiles="OpenStreetMap")
-total_walked_km = 0.0
 
-# --- Step 5: Parse GPX and add to map ---
+# ---------------------------------
+# Step 4 — Initialize map
+# ---------------------------------
+m = folium.Map(location=[54.5, -3.0], zoom_start=6, tiles="OpenStreetMap")
+
+total_walked_km = 0.0
 SITE_ROOT = "https://twotogether.github.io/uk-coast-walk-tracker"
 
+
+# ---------------------------------
+# Step 5 — Load GPX, add to map
+# ---------------------------------
 for walk in data.get("walks", []):
     name = walk["name"]
-    journal = walk.get("journal", "")
-
     coords = []
+
     gpx_path = BASE_DIR / walk["gpx"]
-    if gpx_path.exists():
-        with open(gpx_path, "r", encoding="utf-8") as gpx_file:
-            gpx = gpxpy.parse(gpx_file)
-            for track in gpx.tracks:
-                for segment in track.segments:
-                    for point in segment.points:
-                        coords.append([point.latitude, point.longitude])
-    else:
-        print(f"⚠️  GPX file not found: {gpx_path}")
 
-    if coords:
-        walked_km = path_length(coords)
-        total_walked_km += walked_km
+    if not gpx_path.exists():
+        print(f"⚠️ Missing GPX file: {gpx_path}")
+        continue
 
-        journal_html = Path(journal).with_suffix(".html").as_posix()
-        journal_url = f"{SITE_ROOT}/{journal_html}"
-        popup_html = f"<b>{name}</b><br><a href='{journal_url}' target='_blank'>View Journal</a>"
-        color = "green" if walk in new_walks else "blue"
+    # Parse GPX
+    with open(gpx_path, "r", encoding="utf-8") as gpx_file:
+        gpx = gpxpy.parse(gpx_file)
+        for track in gpx.tracks:
+            for segment in track.segments:
+                for point in segment.points:
+                    coords.append([point.latitude, point.longitude])
 
-        folium.PolyLine(coords, color=color, weight=4, popup=popup_html).add_to(m)
-        print(f"✅ Added: {name} — {walked_km:.2f} km")
+    if not coords:
+        continue
 
-# --- Step 6: Save distance info ---
+    walked_km = path_length(coords)
+    total_walked_km += walked_km
+
+    # Build journal URL (Sphinx builds .html versions)
+    journal_html = walk["journal"].replace(".md", ".html")
+    journal_url = f"{SITE_ROOT}/{journal_html}"
+
+    popup_html = f"<b>{name}</b><br><a href='{journal_url}' target='_blank'>View Journal</a>"
+
+    color = "green" if walk in new_walks else "blue"
+
+    folium.PolyLine(coords, color=color, weight=4, popup=popup_html).add_to(m)
+
+    print(f"✅ Added: {name} — {walked_km:.2f} km")
+
+
+# ---------------------------------
+# Step 6 — Save Distance JSON
+# ---------------------------------
 UK_COASTLINE_KM = 19000
 fraction_covered = total_walked_km / UK_COASTLINE_KM
 
@@ -125,17 +162,22 @@ distance_info = {
 with open(DATA_DIR / "distance.json", "w", encoding="utf-8") as f:
     json.dump(distance_info, f, indent=2)
 
-print(f"\n🌊 Total distance walked: {total_walked_km:.2f} km")
+print(f"\n🌊 Walked: {total_walked_km:.2f} km")
 print(f"🌊 Fraction of coastline walked: {fraction_covered:.2%}")
 
-# --- Step 7: Save map ---
-MAP_DIR.mkdir(exist_ok=True)
+
+# ---------------------------------
+# Step 7 — Save Map
+# ---------------------------------
 map_out = MAP_DIR / "index.html"
 m.save(map_out)
 print(f"\n✅ Map saved to {map_out}")
 
-# --- Summary of new walks ---
+
+# ---------------------------------
+# Summary
+# ---------------------------------
 if new_walks:
-    print("\n🆕 Newly added GPX walks this run:")
+    print("\n🆕 Newly added GPX files:")
     for w in new_walks:
         print(f" - {w['gpx']}")
