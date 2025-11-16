@@ -17,7 +17,7 @@ jobs:
 
       # 2️⃣ Build artifacts already exist in docs/_build/html, so just deploy
       - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v6
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/_build/html
