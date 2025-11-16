@@ -13,7 +13,7 @@ WALKS_YAML = BASE_DIR / "data" / "walks.yaml"
 DATA_DIR = BASE_DIR / "data"
 
 # Updated: map inside Sphinx _static
-MAP_DIR = BASE_DIR / "docs" / "_static" / "map"
+MAP_DIR = BASE_DIR / "docs" / "map"
 MAP_DIR.mkdir(parents=True, exist_ok=True)
 
 # --- Make scripts importable ---

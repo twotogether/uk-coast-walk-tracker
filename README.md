@@ -31,7 +31,7 @@ This tool allows you to log GPX walks, generate a map of the coastline you’ve 
 
     - New GPX files will automatically be added to `data/walks.yaml`.  
     - Journal Markdown files are automatically created in `docs/journals/`.  
-    - The interactive map is generated and saved in `docs/_static/map/index.html`.
+    - The interactive map is generated and saved in `docs/map/index.html`.
 
     > ⚠️ If you delete a GPX file, you must manually remove the entry from `walks.yaml`.
 
@@ -53,8 +53,8 @@ This tool allows you to log GPX walks, generate a map of the coastline you’ve 
 
 ## Output
 
-- Interactive map: `docs/_static/map/index.html`  
+- Interactive map: `docs/map/index.html`  
 - Journals: `docs/journals/`  
 - Distance data: `data/distance.json`  
 
-[View Live Map](https://twotogether.github.io/uk-coast-walk-tracker/docs/_static/map/index.html)
+[View Live Map](https://twotogether.github.io/uk-coast-walk-tracker/docs/map/index.html)
