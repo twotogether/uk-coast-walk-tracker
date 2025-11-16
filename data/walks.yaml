@@ -11,6 +11,7 @@ walks:
 - name: Tyninghame To Dunbar
   gpx: gpx/tyninghame-to-dunbar.gpx
   journal: journals\tyninghame-to-dunbar.md
+  images: images\dunbar-cliffs.jpg
 - name: Dunstanburgh To Alnmouth
   gpx: gpx/dunstanburgh-to-alnmouth.gpx
   journal: journals\dunstanburgh-to-alnmouth.md
@@ -29,3 +30,4 @@ walks:
 - name: Leith To Granton
   gpx: gpx/leith-to-granton.gpx
   journal: journals\leith-to-granton.md
+

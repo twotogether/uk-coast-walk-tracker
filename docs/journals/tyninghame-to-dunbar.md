@@ -2,10 +2,9 @@
 
 ## Route
 
-| Section Walked   | Distance | Date |
-| -------- | ------- | ---- |
-| Tyninghame to Dunbar  |  7.16 km  | 29/8/2025
-
+| Section Walked | Distance | Date |
+| :-------- | :------- | :---- |
+| Tyninghame to Dunbar | 7.16 km | 29/8/2025 |
 
 ## Notes
 
@@ -13,4 +12,4 @@
 - Public toilets in John Muir Country Park and at Dunbar.
 - Walked as part of the John Muir Way from East Linton to Dunbar. You can see some photos of the Dunbar cliff walk [here](https://two-together.com/east-linton-to-dunbar-walk/).
 
-![](/images/dunbar-cliffs.jpg)
+![Tyninghame To Dunbar](/images/dunbar-cliffs.jpg)

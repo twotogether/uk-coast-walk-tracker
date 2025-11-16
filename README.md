@@ -6,11 +6,12 @@ This tool allows you to log GPX walks, generate a map of the coastline you’ve 
 
 ## Features
 
-- Automatically detects new GPX files and updates `walks.yaml`.  
+- Automatically detects new GPX files and updates `data/walks.yaml`.  
 - Generates interactive **Folium maps** showing walked sections.  
 - Calculates total distance walked and fraction of UK coastline completed.  
-- Supports journaling for each walk in Markdown (`journals/`).  
-- Highlights newly added walks on the map for easy identification.
+- Supports journaling for each walk in Markdown (`docs/journals/`).  
+- Highlights newly added walks on the map for easy identification.  
+- Sidebar TOC shows all walks.
 
 ## How to Use This
 
@@ -20,26 +21,40 @@ This tool allows you to log GPX walks, generate a map of the coastline you’ve 
 
     `[start]-to-[destination].gpx`
     
-    Example: s-queensferry-to-boness.gpx
+    Example: `s-queensferry-to-boness.gpx`
 
-2. Run the map generator.
+3. Run the map generator:
 
-    `python scripts/generate_map.py`
+    ```bash
+    python scripts/generate_map.py
+    ```
 
-    New GPX files will automatically be added to `walks.yaml`. 
-     
-    > NOTE: If you delete a `gpx` file, you must manually remove the entry from `walks.yaml`.
+    - New GPX files will automatically be added to `data/walks.yaml`.  
+    - Journal Markdown files are automatically created in `docs/journals/`.  
+    - The interactive map is generated and saved in `docs/_static/map/index.html`.
 
-    Journal files are automatically created in the `journals` folder.
+    > ⚠️ If you delete a GPX file, you must manually remove the entry from `walks.yaml`.
 
-3. Add `region` keys to `data/toc.yml`, and organise the files.
+4. Build the Sphinx documentation:
 
-4. Verify the output. 
+    ```bash
+    cd docs
+    make html
+    ```
 
-    To verify locally, navigate to the root folder on CLI and run `python -m http.server 8000`, then open http://localhost:8000.
+    - The homepage shows the embedded map.  
+    - Sidebar displays all walks organised by region.  
+
+5. Verify the output locally by opening:
+
+    ```bash
+    open _build/html/index.html  # or navigate in your file browser
+    ```
 
 ## Output
 
-The map is saved in the `map/` folder.
+- Interactive map: `docs/_static/map/index.html`  
+- Journals: `docs/journals/`  
+- Distance data: `data/distance.json`  
 
-[View Map](https://twotogether.github.io/uk-coast-walk-tracker/map/index.html)
+[View Live Map](https://twotogether.github.io/uk-coast-walk-tracker/docs/_static/map/index.html)
