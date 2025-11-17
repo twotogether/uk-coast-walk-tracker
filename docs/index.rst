@@ -5,51 +5,13 @@ UK Coast Walk Tracker
 
     <iframe src="_static/map/index.html" width="100%" height="600px" style="border:1px solid #ccc; border-radius:8px;"></iframe>
 
-
 .. toctree::
-   :maxdepth: 1
-   :caption: Lothian
-   :glob:
+   :maxdepth: 2
    :hidden:
 
-   journals/lothian/*
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Angus & Dundee
-   :glob:
-   :hidden:
-
-   journals/angus-dundee/*
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Caithness
-   :glob:
-   :hidden:
-
-   journals/caithness/*
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Fife
-   :glob:
-   :hidden:
-
-   journals/fife/*
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Moray & Banff
-   :glob:
-   :hidden:
-
-   journals/moray-banff/*
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Northumberland
-   :glob:
-   :hidden:
-
-   journals/northumberland/*
+   journals/lothian/index
+   journals/angus-dundee/index
+   journals/caithness/index
+   journals/fife/index
+   journals/moray-banff/index
+   journals/northumberland/index

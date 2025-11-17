@@ -35,10 +35,10 @@ source_suffix = {
 templates_path = ['_templates']
 html_static_path = ['_static']
 
-# Theme
-html_theme = 'sphinx_rtd_theme'
+html_theme = "sphinx_rtd_theme"
 
-# Sidebar maxdepth
 html_theme_options = {
-    'navigation_depth': 2,  # Controls levels of sidebar
+    "collapse_navigation": False,  # keep all sidebar entries expanded
+    "navigation_depth": 2,         # max levels to show
 }
+

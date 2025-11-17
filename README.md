@@ -57,4 +57,4 @@ This tool allows you to log GPX walks, generate a map of the coastline you’ve 
 - Journals: `docs/journals/`  
 - Distance data: `data/distance.json`  
 
-[View Live Map](https://twotogether.github.io/uk-coast-walk-tracker/docs/map/index.html)
+See [UK coast walk tracker](https://twotogether.github.io/uk-coast-walk-tracker/index.html).
